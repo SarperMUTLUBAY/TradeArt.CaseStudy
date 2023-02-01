@@ -1,5 +1,5 @@
 using TradeArt.CaseStudy.Api.Controllers;
-using TradeArt.CaseStudy.Business.Implementations;
+using TradeArt.CaseStudy.Facade.Implementations;
 using TradeArt.CaseStudy.Model.Requests.CaseStudy;
 
 namespace TradeArt.CaseStudy.Api.Tests; 
@@ -10,7 +10,7 @@ public class CaseStudyControllerTests {
 
 	[SetUp]
 	public void Setup() {
-		_caseStudyController = new CaseStudyController(new CaseStudyBusiness());
+		_caseStudyController = new CaseStudyController(new CaseStudyFacade());
 	}
 	
 	[Test]

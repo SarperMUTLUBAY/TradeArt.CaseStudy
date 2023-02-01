@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using TradeArt.CaseStudy.Business.Interfaces;
-using TradeArt.CaseStudy.Common.Constants;
+using TradeArt.CaseStudy.Facade.Interfaces;
 using TradeArt.CaseStudy.Model;
 using TradeArt.CaseStudy.Model.Requests.CaseStudy;
 
@@ -8,12 +7,12 @@ namespace TradeArt.CaseStudy.Api.Controllers;
 
 public class CaseStudyController : BaseController {
 	
-	private readonly ICaseStudyBusiness _business;
+	private readonly ICaseStudyFacade _facade;
 
-	public CaseStudyController(ICaseStudyBusiness business) {
-		_business = business;
+	public CaseStudyController(ICaseStudyFacade facade) {
+		_facade = facade;
 	}
 	
 	[HttpPost]
-	public BaseResult Invert([FromBody] InvertRequest request) => _business.InvertText(request);
+	public BaseResult Invert([FromBody] InvertRequest request) => _facade.InvertText(request);
 }

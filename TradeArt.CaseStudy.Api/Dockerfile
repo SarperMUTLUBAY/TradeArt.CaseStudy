@@ -6,7 +6,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["TradeArt.CaseStudy.Api/TradeArt.CaseStudy.Api.csproj", "TradeArt.CaseStudy.Api/"]
-COPY ["TradeArt.CaseStudy.Business/TradeArt.CaseStudy.Business.csproj", "TradeArt.CaseStudy.Business/"]
+COPY ["TradeArt.CaseStudy.Facade/TradeArt.CaseStudy.Facade.csproj", "TradeArt.CaseStudy.Facade/"]
 COPY ["TradeArt.CaseStudy.Model/TradeArt.CaseStudy.Model.csproj", "TradeArt.CaseStudy.Model/"]
 COPY ["TradeArt.CaseStudy.Common/TradeArt.CaseStudy.Common.csproj", "TradeArt.CaseStudy.Common/"]
 RUN dotnet restore "TradeArt.CaseStudy.Api/TradeArt.CaseStudy.Api.csproj"

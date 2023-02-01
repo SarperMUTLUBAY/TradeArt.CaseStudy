@@ -1,16 +1,16 @@
-using TradeArt.CaseStudy.Business.Implementations;
-using TradeArt.CaseStudy.Business.Interfaces;
+using TradeArt.CaseStudy.Facade.Implementations;
+using TradeArt.CaseStudy.Facade.Interfaces;
 using TradeArt.CaseStudy.Model.Requests.CaseStudy;
 
-namespace TradeArt.CaseStudy.Business.Tests; 
+namespace TradeArt.CaseStudy.Facade.Tests; 
 
 [TestFixture]
-public class CaseStudyBusinessTests {
-	private ICaseStudyBusiness _caseStudyBusiness;
+public class CaseStudyFacadeTests {
+	private ICaseStudyFacade _caseStudyFacade;
 
 	[SetUp]
 	public void Setup() {
-		_caseStudyBusiness = new CaseStudyBusiness();
+		_caseStudyFacade = new CaseStudyFacade();
 	}
 	
 	[Test]
@@ -23,7 +23,7 @@ public class CaseStudyBusinessTests {
 		};
 
 		//Act
-		var result = _caseStudyBusiness.InvertText(request);
+		var result = _caseStudyFacade.InvertText(request);
 
 		//Assert
 		Assert.True(result.IsSuccess);
@@ -37,7 +37,7 @@ public class CaseStudyBusinessTests {
 		var request = new InvertRequest();
 
 		//Act
-		var result = _caseStudyBusiness.InvertText(request);
+		var result = _caseStudyFacade.InvertText(request);
 
 		//Assert
 		Assert.False(result.IsSuccess);

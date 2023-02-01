@@ -2,13 +2,13 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeArt.CaseStudy.Api", "TradeArt.CaseStudy.Api\TradeArt.CaseStudy.Api.csproj", "{A65EF456-8AE4-4AAF-8352-A2D448148293}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeArt.CaseStudy.Business", "TradeArt.CaseStudy.Business\TradeArt.CaseStudy.Business.csproj", "{4E5A45FB-B930-46C2-88BC-5AA21A58FD22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeArt.CaseStudy.Facade", "TradeArt.CaseStudy.Facade\TradeArt.CaseStudy.Facade.csproj", "{4E5A45FB-B930-46C2-88BC-5AA21A58FD22}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeArt.CaseStudy.Common", "TradeArt.CaseStudy.Common\TradeArt.CaseStudy.Common.csproj", "{5451CDC5-0979-49A9-A2C6-D70A8ECE6720}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeArt.CaseStudy.Model", "TradeArt.CaseStudy.Model\TradeArt.CaseStudy.Model.csproj", "{F082930A-328A-4B9F-B674-7D20AD20D1BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeArt.CaseStudy.Business.Tests", "TradeArt.CaseStudy.Business.Tests\TradeArt.CaseStudy.Business.Tests.csproj", "{36FE53D8-607F-4AC3-BB55-05218F947B7D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeArt.CaseStudy.Facade.Tests", "TradeArt.CaseStudy.Facade.Tests\TradeArt.CaseStudy.Facade.Tests.csproj", "{36FE53D8-607F-4AC3-BB55-05218F947B7D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3DFE6D2E-D37F-4574-9ECD-2C1120BCEB22}"
 EndProject

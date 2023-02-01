@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TradeArt.CaseStudy.Business\TradeArt.CaseStudy.Business.csproj" />
+      <ProjectReference Include="..\TradeArt.CaseStudy.Facade\TradeArt.CaseStudy.Facade.csproj" />
       <ProjectReference Include="..\TradeArt.CaseStudy.Common\TradeArt.CaseStudy.Common.csproj" />
     </ItemGroup>
 
