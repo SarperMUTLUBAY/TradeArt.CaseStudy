@@ -12,8 +12,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TradeArt.CaseStudy.Core\TradeArt.CaseStudy.Core.csproj" />
       <ProjectReference Include="..\TradeArt.CaseStudy.Facade\TradeArt.CaseStudy.Facade.csproj" />
-      <ProjectReference Include="..\TradeArt.CaseStudy.Common\TradeArt.CaseStudy.Common.csproj" />
     </ItemGroup>
 
     <ItemGroup>

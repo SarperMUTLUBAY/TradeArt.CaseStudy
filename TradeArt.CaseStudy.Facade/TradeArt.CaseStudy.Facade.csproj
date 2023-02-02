@@ -7,8 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TradeArt.CaseStudy.Common\TradeArt.CaseStudy.Common.csproj" />
+      <ProjectReference Include="..\TradeArt.CaseStudy.Core\TradeArt.CaseStudy.Core.csproj" />
       <ProjectReference Include="..\TradeArt.CaseStudy.Model\TradeArt.CaseStudy.Model.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
+      <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
     </ItemGroup>
 
 </Project>

@@ -1,3 +1,7 @@
+using Microsoft.Extensions.Options;
+using Moq;
+using TradeArt.CaseStudy.Core.Clients.RabbitMQ;
+using TradeArt.CaseStudy.Core.Configs;
 using TradeArt.CaseStudy.Facade.Implementations;
 using TradeArt.CaseStudy.Facade.Interfaces;
 using TradeArt.CaseStudy.Model.Requests.CaseStudy;
@@ -10,7 +14,14 @@ public class CaseStudyFacadeTests {
 
 	[SetUp]
 	public void Setup() {
-		_caseStudyFacade = new CaseStudyFacade();
+		RabbitMQQueueConfiguration mockRabbitMqQueueConfiguration = new RabbitMQQueueConfiguration{IteratorQueue= "test"};
+		var mockRabbitMqQueueConfigurationOption = new Mock<IOptions<RabbitMQQueueConfiguration>>();
+		mockRabbitMqQueueConfigurationOption.Setup(ap => ap.Value).Returns(mockRabbitMqQueueConfiguration);
+		
+		var mockRabbitClient = new Mock<IRabbitMqClient>();
+		mockRabbitClient.Setup(func => func.PublishToQueue<string>(default, null)).Returns(true);
+		mockRabbitClient.Setup(func => func.BulkPublishToQueue<string>(default, null)).Returns(true);
+		_caseStudyFacade = new CaseStudyFacade(mockRabbitClient.Object, mockRabbitMqQueueConfigurationOption.Object);
 	}
 	
 	[Test]

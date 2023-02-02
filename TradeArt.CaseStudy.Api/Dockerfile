@@ -1,7 +1,6 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
@@ -9,6 +8,7 @@ COPY ["TradeArt.CaseStudy.Api/TradeArt.CaseStudy.Api.csproj", "TradeArt.CaseStud
 COPY ["TradeArt.CaseStudy.Facade/TradeArt.CaseStudy.Facade.csproj", "TradeArt.CaseStudy.Facade/"]
 COPY ["TradeArt.CaseStudy.Model/TradeArt.CaseStudy.Model.csproj", "TradeArt.CaseStudy.Model/"]
 COPY ["TradeArt.CaseStudy.Common/TradeArt.CaseStudy.Common.csproj", "TradeArt.CaseStudy.Common/"]
+COPY ["TradeArt.CaseStudy.Core/TradeArt.CaseStudy.Core.csproj", "TradeArt.CaseStudy.Core/"]
 RUN dotnet restore "TradeArt.CaseStudy.Api/TradeArt.CaseStudy.Api.csproj"
 COPY . .
 WORKDIR "/src/TradeArt.CaseStudy.Api"
@@ -20,4 +20,8 @@ RUN dotnet publish "TradeArt.CaseStudy.Api.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+ARG ENVIRONMENT
+ENV ASPNETCORE_ENVIRONMENT $ENVIRONMENT
+
 ENTRYPOINT ["dotnet", "TradeArt.CaseStudy.Api.dll"]
