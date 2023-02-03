@@ -8,12 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="GraphQL.Client" Version="5.1.1" />
+        <PackageReference Include="GraphQL.Client.Abstractions" Version="5.1.1" />
+        <PackageReference Include="GraphQL.Client.Serializer.SystemTextJson" Version="5.1.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\TradeArt.CaseStudy.Core\TradeArt.CaseStudy.Core.csproj" />
       <ProjectReference Include="..\TradeArt.CaseStudy.Facade\TradeArt.CaseStudy.Facade.csproj" />
+      <ProjectReference Include="..\TradeArt.CaseStudy.Integration\TradeArt.CaseStudy.Integration.csproj" />
     </ItemGroup>
 
     <ItemGroup>

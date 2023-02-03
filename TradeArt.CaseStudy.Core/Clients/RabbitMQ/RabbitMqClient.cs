@@ -18,19 +18,23 @@ public class RabbitMqClient : IRabbitMqClient {
 	}
 
 	public bool PublishToQueue<T>(string queue, T message) {
+		if (queue == null) {
+			_logger.LogInformation("Queue cannot be null.");
+			throw new ArgumentNullException(nameof(queue), "Queue cannot be null.");
+		}
+
 		if (message == null) {
 			_logger.LogInformation("Message cannot be null.");
 			throw new ArgumentNullException(nameof(message), "Message cannot be null.");
 		}
 
-		var rabbitHostName = _rabbitMqConnectionConfigurations.HostName;
-		if (string.IsNullOrWhiteSpace(rabbitHostName)) {
+		if (string.IsNullOrWhiteSpace(_rabbitMqConnectionConfigurations.HostName)) {
 			_logger.LogInformation("RabbitMQ connection hostname cannot be null whitespace.");
 			throw new CaseStudyException("RabbitMQ connection hostname cannot be null whitespace.");
 		}
 
 		try {
-			var factory = new ConnectionFactory {HostName = rabbitHostName};
+			var factory = new ConnectionFactory {HostName = _rabbitMqConnectionConfigurations.HostName};
 
 			using var connection = factory.CreateConnection();
 			using var channel = connection.CreateModel();
@@ -48,19 +52,23 @@ public class RabbitMqClient : IRabbitMqClient {
 	}
 
 	public bool BulkPublishToQueue<T>(string queue, List<T> messages) {
-		if (messages == null || messages.Count == 0) {
-			_logger.LogInformation("Messages cannot be null.");
-			throw new CaseStudyException("Messages cannot be null.");
+		if (queue == null) {
+			_logger.LogInformation("Queue cannot be null.");
+			throw new ArgumentNullException(nameof(queue), "Queue cannot be null.");
 		}
 
-		var rabbitHostName = _rabbitMqConnectionConfigurations.HostName;
-		if (string.IsNullOrWhiteSpace(rabbitHostName)) {
+		if (messages == null || messages.Count == 0) {
+			_logger.LogInformation("Messages cannot be null or empty collection.");
+			throw new ArgumentNullException(nameof(messages), "Messages cannot be null or empty collection.");
+		}
+
+		if (string.IsNullOrWhiteSpace(_rabbitMqConnectionConfigurations.HostName)) {
 			_logger.LogInformation("RabbitMQ connection hostname cannot be null whitespace.");
 			throw new CaseStudyException("RabbitMQ connection hostname cannot be null whitespace.");
 		}
 
 		try {
-			var factory = new ConnectionFactory {HostName = rabbitHostName};
+			var factory = new ConnectionFactory {HostName = _rabbitMqConnectionConfigurations.HostName};
 
 			using var connection = factory.CreateConnection();
 			using var channel = connection.CreateModel();

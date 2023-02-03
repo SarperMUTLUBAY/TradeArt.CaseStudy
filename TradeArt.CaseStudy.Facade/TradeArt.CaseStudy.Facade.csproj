@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\TradeArt.CaseStudy.Core\TradeArt.CaseStudy.Core.csproj" />
+      <ProjectReference Include="..\TradeArt.CaseStudy.Integration\TradeArt.CaseStudy.Integration.csproj" />
       <ProjectReference Include="..\TradeArt.CaseStudy.Model\TradeArt.CaseStudy.Model.csproj" />
     </ItemGroup>
 

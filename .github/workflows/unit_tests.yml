@@ -1,0 +1,19 @@
+name: Run Unit Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Trade Art Case Study Unit Tests
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run Tests
+        run: dotnet test --logger "console;verbosity=detailed"

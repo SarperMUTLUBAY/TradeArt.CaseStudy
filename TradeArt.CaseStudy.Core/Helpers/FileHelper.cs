@@ -1,4 +1,3 @@
-using System.Net;
 using TradeArt.CaseStudy.Common;
 
 namespace TradeArt.CaseStudy.Core.Helpers;

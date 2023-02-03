@@ -20,4 +20,10 @@ public class CaseStudyController : BaseController {
 
 	[HttpPost]
 	public async Task<BaseResult> CalculateSHA([FromBody] CalculateShaRequest request, CancellationToken cancellationToken) => await _facade.CalculateSHA(request, cancellationToken);
+
+	[HttpPost]
+	public async Task<BaseResult> GetAssets([FromBody] GetAssetsRequest request, CancellationToken cancellationToken) {
+		var data = await _facade.GetAssets(request, cancellationToken);
+		return data;
+	}
 }
