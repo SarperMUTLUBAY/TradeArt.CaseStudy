@@ -5,6 +5,7 @@ using RabbitMQ.Client.Events;
 using System.Text;
 using System.Text.Json;
 using TradeArt.CaseStudy.Consumer.Configs;
+using TradeArt.CaseStudy.Consumer.Exceptions;
 using TradeArt.CaseStudy.Consumer.Models;
 
 namespace TradeArt.CaseStudy.Consumer;
@@ -21,7 +22,7 @@ public class IteratorConsumer {
 	public void Consume() {
 		var rabbitHostName = _rabbitMqConfigurations.Connection.HostName;
 		if (string.IsNullOrWhiteSpace(rabbitHostName))
-			throw new Exception($"RabbitMQ connection hostname cannot be null whitespace.");
+			throw new CaseStudyException($"RabbitMQ connection hostname cannot be null whitespace.");
 
 		var factory = new ConnectionFactory {HostName = rabbitHostName};
 

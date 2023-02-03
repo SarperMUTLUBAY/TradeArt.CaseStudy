@@ -7,6 +7,7 @@ using TradeArt.CaseStudy.Model;
 using TradeArt.CaseStudy.Model.Dtos;
 using TradeArt.CaseStudy.Model.Requests.CaseStudy;
 using System;
+using TradeArt.CaseStudy.Core.Helpers;
 
 namespace TradeArt.CaseStudy.Facade.Implementations;
 
@@ -50,21 +51,17 @@ public class CaseStudyFacade : ICaseStudyFacade {
 
 	public async Task<BaseResult> CalculateSHA(CalculateShaRequest request, CancellationToken cancellationToken) {
 		try {
-			using var md5 = MD5.Create();
-			await using var stream = new FileStream(request.FileUrl, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true);
-			var buffer = new byte[4096];
-			int bytesRead;
-			do {
-				bytesRead = await stream.ReadAsync(buffer.AsMemory(0, 4096), cancellationToken);
-				if (bytesRead > 0) {
-					md5.TransformBlock(buffer, 0, bytesRead, null, 0);
-				}
-			} while (bytesRead > 0);
+			string fileName = FileHelper.GetFileNameFromUrl(request.FileUrl) ?? Guid.NewGuid().ToString("D");
+			var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), "Files");
+			var fileResult = await FileHelper.DownloadFileAsync(request.FileUrl, pathToSave, fileName, true, cancellationToken);
+			if (string.IsNullOrWhiteSpace(fileResult)) {
+				return new ErrorResult("File not found.");
+			}
 
-			md5.TransformFinalBlock(buffer, 0, 0);
-			var sha = BitConverter.ToString(md5.Hash)
-								  .Replace("-", "")
-								  .ToLowerInvariant();
+			using var md5 = MD5.Create();
+			await using var stream = File.OpenRead(fileResult);
+			var hash = await md5.ComputeHashAsync(stream, cancellationToken);
+			var sha = BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
 
 			return new SuccessResult<string>(sha);
 		} catch (Exception e) {

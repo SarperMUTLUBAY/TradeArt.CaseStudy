@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
+using TradeArt.CaseStudy.Common;
 using TradeArt.CaseStudy.Core.Configs;
 
 namespace TradeArt.CaseStudy.Core.Clients.RabbitMQ;
@@ -19,13 +20,13 @@ public class RabbitMqClient : IRabbitMqClient {
 	public bool PublishToQueue<T>(string queue, T message) {
 		if (message == null) {
 			_logger.LogInformation("Message cannot be null.");
-			throw new Exception("Message cannot be null.");
+			throw new ArgumentNullException(nameof(message), "Message cannot be null.");
 		}
 
 		var rabbitHostName = _rabbitMqConnectionConfigurations.HostName;
 		if (string.IsNullOrWhiteSpace(rabbitHostName)) {
 			_logger.LogInformation("RabbitMQ connection hostname cannot be null whitespace.");
-			throw new Exception("RabbitMQ connection hostname cannot be null whitespace.");
+			throw new CaseStudyException("RabbitMQ connection hostname cannot be null whitespace.");
 		}
 
 		try {
@@ -49,13 +50,13 @@ public class RabbitMqClient : IRabbitMqClient {
 	public bool BulkPublishToQueue<T>(string queue, List<T> messages) {
 		if (messages == null || messages.Count == 0) {
 			_logger.LogInformation("Messages cannot be null.");
-			throw new Exception("Messages cannot be null.");
+			throw new CaseStudyException("Messages cannot be null.");
 		}
 
 		var rabbitHostName = _rabbitMqConnectionConfigurations.HostName;
 		if (string.IsNullOrWhiteSpace(rabbitHostName)) {
 			_logger.LogInformation("RabbitMQ connection hostname cannot be null whitespace.");
-			throw new Exception("RabbitMQ connection hostname cannot be null whitespace.");
+			throw new CaseStudyException("RabbitMQ connection hostname cannot be null whitespace.");
 		}
 
 		try {
