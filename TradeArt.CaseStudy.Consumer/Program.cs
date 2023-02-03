@@ -11,4 +11,4 @@ var host = Host.CreateDefaultBuilder(args)
 			   .Build();
 
 var consumer = host.Services.GetRequiredService<IteratorConsumer>();
-consumer.Consume();
+await consumer.Consume();

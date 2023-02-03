@@ -19,18 +19,21 @@ public class IteratorConsumer {
 		_rabbitMqConfigurations = rabbitMqConfigurationOptions.Value;
 	}
 
-	public void Consume() {
-		var rabbitHostName = _rabbitMqConfigurations.Connection.HostName;
-		if (string.IsNullOrWhiteSpace(rabbitHostName))
+	public async Task Consume() {
+		_logger.LogInformation($"Hostname : {_rabbitMqConfigurations.Connection.HostName}");
+		
+		if (string.IsNullOrWhiteSpace(_rabbitMqConfigurations.Connection.HostName))
 			throw new CaseStudyException($"RabbitMQ connection hostname cannot be null whitespace.");
 
-		var factory = new ConnectionFactory {HostName = rabbitHostName};
-
+		var factory = new ConnectionFactory {HostName = _rabbitMqConfigurations.Connection.HostName};
+		
 		using var connection = factory.CreateConnection();
 		using var channel = connection.CreateModel();
 		channel.QueueDeclare(_rabbitMqConfigurations.Queues.IteratorQueue, false, false, false, null);
 
 		RunWorker(channel);
+
+		await Task.Run(() => Thread.Sleep(Timeout.Infinite));
 	}
 
 	private void RunWorker(IModel channel) {
@@ -55,15 +58,13 @@ public class IteratorConsumer {
 							 };
 
 		channel.BasicConsume(_rabbitMqConfigurations.Queues.IteratorQueue, false, consumer);
-
-		Console.WriteLine("Press [enter] to exit.");
-		Console.ReadLine();
 	}
 
 	private async Task<bool> ProcessData(IteratorMessageDto data) {
 		_logger.LogInformation($"Data processing started for iteration Date : {data.IterationDate} and Iteration Id : {data.IterationId}");
 
 		// Do something with data
+		
 		await Task.Delay(TimeSpan.FromMilliseconds(100));
 		_logger.LogInformation($"Data processing finished for iteration Date : {data.IterationDate} and Iteration Id : {data.IterationId}");
 
