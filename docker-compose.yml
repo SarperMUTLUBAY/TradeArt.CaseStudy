@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  web:
+    hostname: web
+    build:
+      context: ./
+      dockerfile: ./TradeArt.CaseStudy.Api/Dockerfile
+    ports:
+      - "${API_PORT}:80"
+    environment:
+      - "ASPNETCORE_ENVIRONMENT=Development"
+      - "RabbitMQConfigurations__Connection__HostName=rabbitmq"
+    volumes:
+      - webapivolume:/app/Files
+    networks:
+      - case-study-network
+    depends_on:
+      - rabbitmq
+  consumer:
+    hostname: consumer
+    build:
+      context: ./
+      dockerfile: ./TradeArt.CaseStudy.Consumer/Dockerfile
+    environment:
+      - "DOTNET_ENVIRONMENT=Development"
+      - "RabbitMQConfigurations__Connection__HostName=rabbitmq"
+    networks:
+      - case-study-network
+    depends_on:
+      - rabbitmq
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    hostname: rabbitmq
+    container_name: 'rabbitmq'
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - case-study-network
+networks:
+  case-study-network:
+    driver: bridge
+volumes:
+  webapivolume:
