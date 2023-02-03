@@ -15,17 +15,14 @@ public static class FileHelper {
 	/// <exception cref="ArgumentNullException">returns this exception when required parameters is null.</exception>
 	/// <exception cref="CaseStudyException">returns this exception when file content null or file exists in the directory and overwrite parameter is false.</exception>
 	public static async Task<string> DownloadFileAsync(string url, string pathToSave, string fileName, bool overwrite = false, CancellationToken cancellationToken = default) {
-		if (string.IsNullOrWhiteSpace(url)) {
+		if (string.IsNullOrWhiteSpace(url))
 			throw new ArgumentNullException(nameof(url), "Url cannot be null or whitespace.");
-		}
 
-		if (string.IsNullOrWhiteSpace(pathToSave)) {
+		if (string.IsNullOrWhiteSpace(pathToSave))
 			throw new ArgumentNullException(nameof(pathToSave), "File path cannot be null or whitespace.");
-		}
 
-		if (string.IsNullOrWhiteSpace(fileName)) {
+		if (string.IsNullOrWhiteSpace(fileName))
 			throw new ArgumentNullException(nameof(fileName), "Filename cannot be null or whitespace.");
-		}
 
 		var fullPath = $"{pathToSave}/{fileName}";
 
@@ -34,9 +31,8 @@ public static class FileHelper {
 
 		var content = await GetUrlContentAsync(url, cancellationToken);
 
-		if (content is null) {
+		if (content is null)
 			throw new CaseStudyException("Url content is null.");
-		}
 
 		if (!Directory.Exists(pathToSave))
 			Directory.CreateDirectory(pathToSave);
