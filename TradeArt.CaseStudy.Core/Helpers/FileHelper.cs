@@ -3,6 +3,17 @@ using TradeArt.CaseStudy.Common;
 namespace TradeArt.CaseStudy.Core.Helpers;
 
 public static class FileHelper {
+	/// <summary>
+	/// Download file from url and save it to the specified path.
+	/// </summary>
+	/// <param name="url">The url of the file to be downloaded</param>
+	/// <param name="pathToSave">save path for downloaded file</param>
+	/// <param name="fileName">file name for local file</param>
+	/// <param name="overwrite">delete file if exists</param>
+	/// <param name="cancellationToken">cancellation token for async process</param>
+	/// <returns></returns>
+	/// <exception cref="ArgumentNullException">returns this exception when required parameters is null.</exception>
+	/// <exception cref="CaseStudyException">returns this exception when file content null or file exists in the directory and overwrite parameter is false.</exception>
 	public static async Task<string> DownloadFileAsync(string url, string pathToSave, string fileName, bool overwrite = false, CancellationToken cancellationToken = default) {
 		if (string.IsNullOrWhiteSpace(url)) {
 			throw new ArgumentNullException(nameof(url), "Url cannot be null or whitespace.");
@@ -35,6 +46,12 @@ public static class FileHelper {
 		return fullPath;
 	}
 	
+	/// <summary>
+	/// Get file name from url.
+	/// </summary>
+	/// <param name="url">The url of the file to be downloaded</param>
+	/// <returns>File name in url</returns>
+	/// <exception cref="ArgumentNullException">returns this exception when the url parameter is null or whitespace.</exception>
 	public static string GetFileNameFromUrl(string url) {
 		if (url is null)
 			throw new ArgumentNullException(nameof(url), "Url cannot be null or whitespace.");
@@ -45,6 +62,12 @@ public static class FileHelper {
 		return Path.GetFileName(uri.LocalPath);
 	}
 
+	/// <summary>
+	/// Get file content from url.
+	/// </summary>
+	/// <param name="url">The url of the file to be downloaded</param>
+	/// <param name="cancellationToken">cancellation token for async process</param>
+	/// <returns>File bytes or null</returns>
 	public static async Task<byte[]> GetUrlContentAsync(string url, CancellationToken cancellationToken = default) {
 		using var client = new HttpClient();
 		using var result = await client.GetAsync(url, cancellationToken);

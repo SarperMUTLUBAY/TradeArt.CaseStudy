@@ -23,6 +23,11 @@ public class CaseStudyFacade : ICaseStudyFacade {
 		_blockTapGraphQlIntegration = blockTapGraphQlIntegration;
 	}
 
+	/// <summary>
+	/// Invert text
+	/// </summary>
+	/// <param name="request">InvertRequest model for inverting text</param>
+	/// <returns>returns SuccessResult on success, ErrorResult on failure</returns>
 	public BaseResult InvertText(InvertRequest request) {
 		if (string.IsNullOrWhiteSpace(request.Text))
 			return new ErrorResult("The Text field is required.");
@@ -32,6 +37,11 @@ public class CaseStudyFacade : ICaseStudyFacade {
 		return new SuccessResult<string>(new string(charArray));
 	}
 
+	/// <summary>
+	/// makes Iteration and send data to queue as many as the entered number
+	/// </summary>
+	/// <param name="request">It contains IterationCount for decide to how many iteration</param>
+	/// <returns>returns SuccessResult on success, ErrorResult on failure</returns>
 	public BaseResult Iteration(IterationRequest request) {
 		try {
 			if (request.IterationCount <= 0)
@@ -52,6 +62,12 @@ public class CaseStudyFacade : ICaseStudyFacade {
 		}
 	}
 
+	/// <summary>
+	/// Calculate a SHA hash (in hex form)
+	/// </summary>
+	/// <param name="request">It contains FileUrl for file to be download</param>
+	/// <param name="cancellationToken">cancellation token for async process</param>
+	/// <returns>returns SuccessResult with file sha value on success, ErrorResult on failure</returns>
 	public async Task<BaseResult> CalculateSHA(CalculateShaRequest request, CancellationToken cancellationToken) {
 		try {
 			string fileName = FileHelper.GetFileNameFromUrl(request.FileUrl) ??
@@ -76,22 +92,24 @@ public class CaseStudyFacade : ICaseStudyFacade {
 		}
 	}
 
-	public async Task<BaseResult> GetAssets(GetAssetsRequest request, CancellationToken cancellationToken) {
-		var assetResult = await _blockTapGraphQlIntegration.GetAssetsAsync(request.TotalCount, cancellationToken);
+	/// <summary>
+	/// Get market assets and prices
+	/// </summary>
+	/// <param name="cancellationToken">cancellation token for async process</param>
+	/// <returns>returns SuccessResult with Assets on success, ErrorResult on failure</returns>
+	public async Task<BaseResult> GetAssets(CancellationToken cancellationToken) {
+		var assetResult = await _blockTapGraphQlIntegration.GetAssetsAsync(cancellationToken);
 		if (assetResult == null)
 			return new ErrorResult("No assets returned");
 
 		var response = new GetAssetsResponse();
 
-		var takeCount = request.TotalCount > request.BatchSize
-			? request.BatchSize
-			: request.TotalCount;
 
-		for (var i = 0; i <= request.TotalCount; i += request.BatchSize) {
+		for (var i = 0; i <= 100; i += 20) {
 			var assetSymbols = assetResult.Skip(i)
-										.Take(takeCount)
-										.Select(x => x.AssetSymbol)
-										.ToList();
+										  .Take(20)
+										  .Select(x => x.AssetSymbol)
+										  .ToList();
 
 			var priceData = await _blockTapGraphQlIntegration.GetPricesAsync(assetSymbols, cancellationToken);
 			if (priceData == null)

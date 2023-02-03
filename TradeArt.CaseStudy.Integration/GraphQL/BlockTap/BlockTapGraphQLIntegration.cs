@@ -11,16 +11,16 @@ public class BlockTapGraphQLIntegration : IBlockTapGraphQLIntegration {
 		_graphQlClient = graphQlClient;
 	}
 
-	public async Task<ICollection<Asset>> GetAssetsAsync(int limit, CancellationToken cancellationToken) {
+	public async Task<ICollection<Asset>> GetAssetsAsync(CancellationToken cancellationToken) {
 		var request = new GraphQLRequest {
-			Query = $@"
-		        query Assets {{
-		          assets(sort: [{{marketCapRank: ASC}}], page: {{ skip: 0, limit: {limit} }}) {{
+			Query = @"
+		        query Assets {
+		          assets(sort: [{marketCapRank: ASC}]) {
 		            assetName
 		            assetSymbol
 		            marketCap
-		          }}
-				}}",
+		          }
+				}",
 			OperationName = "Assets",
 			Variables = null
 		};

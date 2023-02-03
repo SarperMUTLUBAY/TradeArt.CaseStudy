@@ -40,7 +40,7 @@ public class GetAssetsAsyncTests {
 		var integration = new Integration.GraphQL.BlockTap.BlockTapGraphQLIntegration(_mockGraphQlClient.Object);
 
 		//Act
-		var result = await integration.GetAssetsAsync(It.IsAny<int>(), CancellationToken.None);
+		var result = await integration.GetAssetsAsync(CancellationToken.None);
 
 		//Assert
 		Assert.NotNull(result);
@@ -61,7 +61,7 @@ public class GetAssetsAsyncTests {
 		var integration = new Integration.GraphQL.BlockTap.BlockTapGraphQLIntegration(_mockGraphQlClient.Object);
 
 		//Act
-		var result = await integration.GetAssetsAsync(It.IsAny<int>(), CancellationToken.None);
+		var result = await integration.GetAssetsAsync(CancellationToken.None);
 
 		//Assert
 		Assert.IsNull(result);
