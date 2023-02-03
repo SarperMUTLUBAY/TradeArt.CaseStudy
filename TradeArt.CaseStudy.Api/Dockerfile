@@ -22,7 +22,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-ARG ENVIRONMENT
-ENV ASPNETCORE_ENVIRONMENT $ENVIRONMENT
-
 ENTRYPOINT ["dotnet", "TradeArt.CaseStudy.Api.dll"]
