@@ -2,20 +2,23 @@
 
 [![Run Unit Tests](https://github.com/SarperMUTLUBAY/TradeArt.CaseStudy/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/SarperMUTLUBAY/TradeArt.CaseStudy/actions/workflows/unit_tests.yml)
 
-## Docker Commands
+# Docker Commands
+
+## Run with compose (replace $API_PORT with the value of your own, default port 8082):
+
+```
+docker-compose --env-file docker.env up -d
+```
+
+## Run without compose (replace $API_PORT with the value of your own):
 
 ### Build:
 
 ```
 docker build -t tradeart_case_study . -f TradeArt.CaseStudy.Api/Dockerfile
 ```
-### Run with compose (replace $API_PORT with the value of your own, default port 8082):
 
-```
-docker-compose --env-file docker.env up -d
-```
-
-### Run without compose (replace $API_PORT with the value of your own):
+### Run:
 
 #### We need a rabbitmq instance for async process (Case Study Task 2).
 
